@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Dhruv Lakhera — Motion Designer & Marketing Strategist</title>
+<meta name="description" content="Motion Designer & Marketing Strategist. YC-backed. 5 years building brand systems that drive revenue."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --bg:#080808;
+  --bg2:#101010;
+  --surface:#141414;
+  --border:rgba(255,255,255,0.07);
+  --border-mid:rgba(255,255,255,0.13);
+  --text:#f2efea;
+  --muted:#666660;
+  --muted2:#999990;
+  --accent:#c8a96e;
+  --accent-light:#e8d5a3;
+  --tag-bg:rgba(200,169,110,0.07);
+  --tag-text:#c8a96e;
+  --font-display:-apple-system,'SF Pro Display','Helvetica Neue',Helvetica,Arial,sans-serif;
+  --font-body:-apple-system,'SF Pro Text','Helvetica Neue',Helvetica,Arial,sans-serif;
+  --font-mono:'IBM Plex Mono','Courier New',monospace;
+}
+
+html{scroll-behavior:auto}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--font-body);
+  font-size:16px;
+  line-height:1.7;
+  overflow-x:hidden;
+  cursor:default;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+
+/* ── PROGRESS BAR ── */
+#progress-bar{position:fixed;top:0;left:0;height:1px;background:var(--accent);width:0%;z-index:200;transition:width .05s linear}
+
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1.4rem 3rem;
+  border-bottom:1px solid transparent;
+  transition:border-color .4s,background .4s;
+}
+nav.scrolled{border-color:var(--border);background:rgba(8,8,8,.92);backdrop-filter:blur(12px)}
+.nav-logo{font-family:var(--font-mono);font-size:12px;font-weight:400;color:var(--muted2);text-decoration:none;letter-spacing:.08em}
+.nav-links{display:flex;gap:2.5rem;list-style:none}
+.nav-links a{font-family:var(--font-mono);font-size:10px;font-weight:400;color:var(--muted);text-decoration:none;letter-spacing:.18em;text-transform:uppercase;transition:color .2s}
+.nav-links a:hover{color:var(--accent)}
+.nav-hire{font-family:var(--font-mono);font-size:10px;font-weight:400;padding:.5rem 1.2rem;border:1px solid var(--border-mid);color:var(--muted2);text-decoration:none;letter-spacing:.15em;text-transform:uppercase;transition:all .3s}
+.nav-hire:hover{border-color:var(--accent);color:var(--accent)}
+
+/* ── HERO ── */
+.hero{
+  position:relative;min-height:100vh;
+  display:flex;flex-direction:column;justify-content:flex-end;
+  padding:0 3rem 5rem;overflow:hidden;
+}
+
+/* giant BG word */
+.hero-ghost{
+  position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  font-family:var(--font-display);
+  font-size:clamp(100px,22vw,300px);
+  font-weight:100;
+  color:rgba(255,255,255,.012);
+  letter-spacing:.12em;
+  white-space:nowrap;
+  pointer-events:none;user-select:none;
+  text-transform:uppercase;
+}
+
+
+
+/* HERO TEXT */
+.hero-eyebrow{
+  font-family:var(--font-mono);font-size:10px;font-weight:400;
+  color:var(--accent);letter-spacing:.22em;text-transform:uppercase;
+  margin-bottom:1.8rem;opacity:0;
+  animation:fadeUp .8s .3s forwards;
+}
+.hero-name{
+  font-family:var(--font-display);
+  font-size:clamp(52px,9vw,130px);
+  font-weight:200;line-height:.95;
+  letter-spacing:.06em;text-transform:uppercase;
+  color:#f2efea;margin-bottom:3rem;
+  opacity:0;animation:fadeUp .9s .5s forwards;
+}
+.hero-bottom{
+  display:flex;align-items:flex-end;justify-content:space-between;
+  opacity:0;animation:fadeUp .8s .7s forwards;
+}
+.hero-desc{
+  max-width:380px;
+  font-family:var(--font-mono);font-size:12px;font-weight:300;
+  color:var(--muted);line-height:1.9;letter-spacing:.01em;
+}
+.hero-desc strong{color:var(--muted2);font-weight:400}
+.hero-actions{display:flex;flex-direction:column;align-items:flex-end;gap:.75rem}
+
+/* scroll indicator */
+.scroll-ind{
+  position:absolute;bottom:3rem;right:3rem;
+  display:flex;flex-direction:column;align-items:center;gap:.5rem;
+  opacity:0;animation:fadeIn 1s 1.4s forwards;
+}
+.scroll-ind span{
+  font-family:var(--font-mono);font-size:9px;color:var(--muted);
+  letter-spacing:.2em;text-transform:uppercase;writing-mode:vertical-rl;
+}
+.scroll-line{width:1px;height:50px;background:var(--border-mid);position:relative;overflow:hidden}
+.scroll-line::after{
+  content:'';position:absolute;top:-100%;left:0;width:100%;height:100%;
+  background:var(--accent);animation:scrollDown 1.6s 1.6s infinite;
+}
+
+/* BTN */
+.btn{
+  display:inline-flex;align-items:center;gap:.5rem;
+  padding:.7rem 1.6rem;
+  font-family:var(--font-mono);font-size:10px;font-weight:400;
+  letter-spacing:.18em;text-transform:uppercase;text-decoration:none;
+  border:1px solid var(--border-mid);color:var(--text);
+  position:relative;overflow:hidden;transition:all .3s;
+}
+.btn::before{
+  content:'';position:absolute;inset:0;
+  background:var(--accent);transform:translateX(-100%);
+  transition:transform .3s;z-index:-1;
+}
+.btn:hover{color:#080808;border-color:var(--accent)}
+.btn:hover::before{transform:translateX(0)}
+.btn-ghost{background:transparent}
+
+/* ── HERO AI STRIP ── */
+.hero-ai{
+  display:flex;align-items:center;gap:1.5rem;
+  margin-top:2.5rem;
+  padding-top:1.75rem;
+  border-top:1px solid var(--border);
+  flex-wrap:wrap;
+}
+.hero-ai-label{
+  font-family:var(--font-mono);font-size:9px;font-weight:400;
+  color:var(--muted);letter-spacing:.2em;text-transform:uppercase;
+  white-space:nowrap;flex-shrink:0;
+}
+.hero-ai-tools{
+  display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;
+}
+.ai-sep{color:var(--border-mid);font-size:12px;line-height:1}
+.ai-tool{
+  font-family:var(--font-mono);font-size:11px;font-weight:400;
+  color:var(--accent-light);letter-spacing:.04em;
+  background:rgba(232,213,163,0.07);
+  border:1px solid rgba(232,213,163,0.18);
+  padding:.2rem .65rem;
+  transition:background .2s,border-color .2s;
+}
+.ai-tool:hover{background:rgba(232,213,163,0.13);border-color:rgba(232,213,163,0.35)}
+.ai-more{color:var(--muted);background:transparent;border-color:var(--border);font-style:italic}
+
+
+.marquee-wrap{border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:.9rem 0;overflow:hidden;background:var(--bg2)}
+.marquee-track{display:flex;width:max-content;animation:marquee 24s linear infinite}
+.marquee-track:hover{animation-play-state:paused}
+.m-item{
+  font-family:var(--font-mono);font-size:9px;font-weight:400;
+  color:var(--muted);letter-spacing:.18em;text-transform:uppercase;
+  padding:0 2rem;white-space:nowrap;display:flex;align-items:center;gap:2rem;
+}
+.m-item::after{content:'·';color:var(--accent)}
+
+/* ── SECTION COMMONS ── */
+section{padding:7rem 3rem}
+.s-label{
+  font-family:var(--font-mono);font-size:9px;font-weight:400;
+  color:var(--accent);letter-spacing:.22em;text-transform:uppercase;
+  margin-bottom:3.5rem;
+  display:flex;align-items:center;gap:1rem;
+}
+.s-label::before{content:'';display:block;width:1.5rem;height:1px;background:var(--accent)}
+
+/* ── ABOUT ── */
+.about{border-top:1px solid var(--border)}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:start}
+
+/* split text lines for scroll reveal */
+.split-line{overflow:hidden;display:block}
+.split-line-inner{
+  display:block;
+  transform:translateY(100%);
+  transition:transform .8s cubic-bezier(.16,1,.3,1);
+}
+.split-line-inner.visible{transform:translateY(0)}
+
+.about-hl{
+  font-family:var(--font-display);
+  font-size:clamp(26px,3.2vw,46px);
+  font-weight:200;line-height:1.18;letter-spacing:-.01em;color:#f2efea;
+}
+.about-hl em{font-style:italic;font-weight:200;color:var(--accent)}
+.about-text{
+  font-family:var(--font-mono);font-size:12px;font-weight:300;
+  color:var(--muted);line-height:2.1;letter-spacing:.01em;margin-bottom:1.75rem;
+  opacity:0;transform:translateY(20px);
+  transition:opacity .7s,transform .7s;
+}
+.about-text.visible{opacity:1;transform:translateY(0)}
+
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;border:1px solid var(--border);margin-top:3rem}
+.stat{padding:1.5rem 1.25rem;border-right:1px solid var(--border)}
+.stat:last-child{border-right:none}
+.stat-n{
+  font-family:var(--font-display);font-size:36px;font-weight:200;
+  color:var(--accent);letter-spacing:-.02em;line-height:1;margin-bottom:.3rem;
+  opacity:0;transform:translateY(16px);transition:opacity .6s,transform .6s;
+}
+.stat-n.visible{opacity:1;transform:translateY(0)}
+.stat-l{font-family:var(--font-mono);font-size:9px;font-weight:400;color:var(--muted);letter-spacing:.1em;text-transform:uppercase}
+
+/* ── WORK ── */
+.work{border-top:1px solid var(--border)}
+
+.vid-wrap{
+  width:60%;
+  border:1px solid var(--border);
+  overflow:hidden;
+}
+.vid-frame{
+  position:relative;width:100%;aspect-ratio:16/9;background:#000;
+}
+.vid-meta{
+  display:flex;align-items:center;justify-content:space-between;gap:1rem;
+  padding:1rem 1.25rem;background:var(--surface);
+  border-top:1px solid var(--border);flex-wrap:wrap;
+}
+
+
+/* old grid stubs kept for mobile */
+.work-grid{display:grid;grid-template-columns:1fr;border:1px solid var(--border)}
+.work-card{
+  position:relative;overflow:hidden;background:var(--surface);
+  aspect-ratio:16/9;display:flex;flex-direction:column;justify-content:flex-end;
+  padding:1.75rem;text-decoration:none;color:inherit;
+  border-right:1px solid var(--border);
+  opacity:0;transform:translateY(30px);transition:opacity .7s,transform .7s,background .3s;
+}
+.work-card.visible{opacity:1;transform:translateY(0)}
+.work-card:hover{background:rgba(30,28,24,.98)}
+.card-media{position:absolute;inset:0;overflow:hidden}
+.card-video{width:100%;height:100%;object-fit:cover;display:block;opacity:0;transition:opacity .4s}
+.card-video[src]{opacity:1}
+.card-placeholder{
+  position:absolute;inset:0;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  font-family:var(--font-mono);font-size:9px;font-weight:400;
+  color:var(--muted);letter-spacing:.15em;text-transform:uppercase;
+  border:1px dashed rgba(255,255,255,.06);margin:1.25rem;gap:.75rem;transition:border-color .3s;
+}
+.card-placeholder svg{opacity:.18;width:28px;height:28px}
+.work-card:hover .card-placeholder{border-color:rgba(200,169,110,.25)}
+
+.card-num{
+  position:absolute;top:1.5rem;left:1.75rem;
+  font-family:var(--font-mono);font-size:9px;font-weight:400;
+  color:var(--muted);letter-spacing:.14em;
+}
+.card-arrow{
+  position:absolute;top:1.5rem;right:1.75rem;
+  font-size:16px;color:var(--accent);
+  opacity:0;transform:translate(-4px,4px);transition:all .3s;
+}
+.work-card:hover .card-arrow{opacity:1;transform:translate(0,0)}
+
+.card-info{
+  position:relative;z-index:2;
+  padding:2.5rem 0 0;
+  transform:translateY(8px);opacity:0;transition:all .35s;
+  background:linear-gradient(to top,rgba(8,8,8,.96) 0%,transparent 100%);
+  margin:0 -1.75rem -1.75rem;padding:2rem 1.75rem 1.75rem;
+}
+.work-card:hover .card-info{transform:translateY(0);opacity:1}
+
+.card-tags{display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:.75rem}
+.tag{
+  font-family:var(--font-mono);font-size:8px;font-weight:400;
+  letter-spacing:.12em;text-transform:uppercase;
+  padding:.18rem .5rem;background:var(--tag-bg);color:var(--tag-text);
+  border:1px solid rgba(200,169,110,.12);
+}
+.card-title{
+  font-family:var(--font-display);font-size:16px;font-weight:300;
+  letter-spacing:-.005em;margin-bottom:.2rem;color:#f2efea;
+}
+.card-sub{font-family:var(--font-mono);font-size:10px;font-weight:300;color:var(--muted);letter-spacing:.02em}
+
+/* ── WHAT I DO (services) ── */
+.services{border-top:1px solid var(--border)}
+.services-list{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;border:1px solid var(--border)}
+.svc{
+  padding:2rem 1.75rem;border-right:1px solid var(--border);
+  opacity:0;transform:translateY(20px);transition:opacity .6s,transform .6s,background .25s;
+}
+.svc:last-child{border-right:none}
+.svc.visible{opacity:1;transform:translateY(0)}
+.svc:hover{background:rgba(200,169,110,.03)}
+.svc-num{font-family:var(--font-mono);font-size:9px;color:var(--accent);letter-spacing:.12em;margin-bottom:1.25rem}
+.svc-title{
+  font-family:var(--font-display);font-size:18px;font-weight:300;
+  color:#f2efea;letter-spacing:-.01em;margin-bottom:.75rem;line-height:1.2;
+}
+.svc-desc{font-family:var(--font-mono);font-size:11px;font-weight:300;color:var(--muted);line-height:1.9;letter-spacing:.01em}
+
+/* ── EXPERIENCE ── */
+.experience{border-top:1px solid var(--border)}
+.exp-item{
+  display:grid;grid-template-columns:220px 1fr;gap:3rem;
+  padding:2.5rem 0;border-bottom:1px solid var(--border);
+  opacity:0;transform:translateY(20px);transition:opacity .7s,transform .7s,background .2s;
+}
+.exp-item:first-child{border-top:1px solid var(--border)}
+.exp-item.visible{opacity:1;transform:translateY(0)}
+.exp-item:hover{background:rgba(255,255,255,.008)}
+.exp-period{font-family:var(--font-mono);font-size:10px;font-weight:400;color:var(--muted);letter-spacing:.1em;margin-bottom:.5rem}
+.exp-co{font-family:var(--font-mono);font-size:10px;font-weight:400;color:var(--accent);letter-spacing:.04em;line-height:1.7}
+.exp-role{
+  font-family:var(--font-display);font-size:19px;font-weight:300;
+  letter-spacing:-.01em;margin-bottom:.5rem;color:#f2efea;
+}
+.exp-note{font-family:var(--font-mono);font-size:10px;font-weight:300;color:var(--accent);font-style:italic;margin-bottom:1.25rem;letter-spacing:.02em}
+.exp-bullets{list-style:none;display:flex;flex-direction:column;gap:.55rem}
+.exp-bullets li{
+  font-family:var(--font-mono);font-size:11px;font-weight:300;
+  color:var(--muted);padding-left:1.25rem;position:relative;line-height:1.8;letter-spacing:.01em;
+}
+.exp-bullets li::before{content:'→';position:absolute;left:0;color:var(--accent);font-size:9px;top:3px}
+.exp-tags{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:1rem}
+
+/* ── SKILLS ── */
+.skills{border-top:1px solid var(--border)}
+.skills-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;border:1px solid var(--border)}
+.skill-block{
+  padding:2rem 1.75rem;border-right:1px solid var(--border);border-bottom:1px solid var(--border);
+  opacity:0;transform:translateY(16px);transition:opacity .6s,transform .6s,background .25s;
+}
+.skill-block:nth-child(even){border-right:none}
+.skill-block.visible{opacity:1;transform:translateY(0)}
+.skill-block:hover{background:rgba(200,169,110,.025)}
+.skill-title{font-family:var(--font-display);font-size:14px;font-weight:300;color:var(--accent);margin-bottom:.75rem}
+.skill-list{font-family:var(--font-mono);font-size:11px;font-weight:300;color:var(--muted);line-height:2;letter-spacing:.01em}
+
+/* ── CONTACT ── */
+.contact{border-top:1px solid var(--border);text-align:center;padding:9rem 3rem}
+.contact-eye{font-family:var(--font-mono);font-size:9px;font-weight:400;color:var(--muted);letter-spacing:.22em;text-transform:uppercase;margin-bottom:2.5rem;opacity:0;transform:translateY(16px);transition:opacity .6s,transform .6s}
+.contact-eye.visible{opacity:1;transform:translateY(0)}
+.contact-hl{
+  font-family:var(--font-display);font-size:clamp(40px,6.5vw,88px);
+  font-weight:200;letter-spacing:-.02em;line-height:1.05;
+  color:#f2efea;margin-bottom:3.5rem;
+}
+.contact-hl em{font-style:italic;font-weight:200;color:var(--accent)}
+.contact-links{display:flex;justify-content:center;gap:1.25rem;flex-wrap:wrap}
+
+/* ── FOOTER ── */
+footer{border-top:1px solid var(--border);padding:1.5rem 3rem;display:flex;justify-content:space-between;align-items:center}
+footer p{font-family:var(--font-mono);font-size:9px;font-weight:400;color:var(--muted);letter-spacing:.08em}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{to{opacity:1}}
+@keyframes scrollDown{0%{top:-100%}100%{top:100%}}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ── MOBILE ── */
+@media(max-width:768px){
+  nav{padding:1.2rem 1.5rem}
+  .nav-links,.nav-hire{display:none}
+  .hero{padding:0 1.5rem 3.5rem}
+  .coin-face{width:52px;height:52px;font-size:20px}
+  .coin-ae{left:4%}.coin-fig{left:76%}.coin-ps{left:6%;top:58%}.coin-pr{left:72%;top:55%}.coin-ai{left:42%}
+  section{padding:4.5rem 1.5rem}
+  .about-grid{grid-template-columns:1fr;gap:2.5rem}
+  .stats{grid-template-columns:1fr}.stat{border-right:none;border-bottom:1px solid var(--border)}
+  .vid-wrap{width:100%}
+  .work-grid{grid-template-columns:1fr}
+  .work-card{aspect-ratio:4/3;border-right:none;border-bottom:1px solid var(--border)}
+  .services-list{grid-template-columns:1fr}.svc{border-right:none}
+  .exp-item{grid-template-columns:1fr;gap:.75rem}
+  .skills-grid{grid-template-columns:1fr}.skill-block:nth-child(even){border-right:none}
+  footer{flex-direction:column;gap:.5rem;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<div id="progress-bar"></div>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="nav-logo">DL / 2025</a>
+  <ul class="nav-links">
+    <li><a href="#work">Work</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="https://mail.google.com/mail/?view=cm&to=lakheradhruv19@gmail.com" target="_blank" class="nav-hire">Hire me →</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+
+
+
+
+  <p class="hero-eyebrow">Motion Designer · Marketing Strategist · Branding · UI/UX</p>
+  <h1 class="hero-name">DHRUV<br/>LAKHERA</h1>
+  <div class="hero-bottom">
+    <p class="hero-desc">
+      Currently designing pharma motion graphics at <strong>SynthioLabs (YC X25)</strong>.<br/>
+      5 years across After Effects, Figma, and Premiere Pro —<br/>
+      at the intersection of design craft and marketing strategy.
+    </p>
+    <div class="hero-actions">
+      <a href="#work" class="btn">View work ↓</a>
+      <a href="https://mail.google.com/mail/?view=cm&to=lakheradhruv19@gmail.com" target="_blank" class="btn btn-ghost">Get in touch →</a>
+    </div>
+  </div>
+
+  <div class="hero-ai" style="opacity:0;animation:fadeUp .8s .9s forwards">
+    <span class="hero-ai-label">AI-augmented workflow</span>
+    <div class="hero-ai-tools">
+      <span class="ai-tool">Claude</span>
+      <span class="ai-sep">·</span>
+      <span class="ai-tool">ChatGPT</span>
+      <span class="ai-sep">·</span>
+      <span class="ai-tool">Gemini</span>
+      <span class="ai-sep">·</span>
+      <span class="ai-tool">ElevenLabs</span>
+      <span class="ai-sep">·</span>
+      <span class="ai-tool">Adobe Firefly</span>
+      <span class="ai-sep">·</span>
+      <span class="ai-tool">Manus</span>
+      <span class="ai-sep">·</span>
+      <span class="ai-tool ai-more">+ more</span>
+    </div>
+  </div>
+  <div class="scroll-ind" aria-hidden="true">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap" aria-hidden="true">
+  <div class="marquee-track">
+    <span class="m-item">After Effects</span><span class="m-item">Motion Design</span>
+    <span class="m-item">UI Animation</span><span class="m-item">Figma</span>
+    <span class="m-item">Brand Systems</span><span class="m-item">Premiere Pro</span>
+    <span class="m-item">Content Strategy</span><span class="m-item">YC-backed</span>
+    <span class="m-item">Pharma Explainers</span><span class="m-item">300+ Projects</span>
+    <span class="m-item">A/B Testing</span><span class="m-item">Kinetic Typography</span>
+    <span class="m-item">Photoshop</span><span class="m-item">Illustrator</span>
+    <span class="m-item">After Effects</span><span class="m-item">Motion Design</span>
+    <span class="m-item">UI Animation</span><span class="m-item">Figma</span>
+    <span class="m-item">Brand Systems</span><span class="m-item">Premiere Pro</span>
+    <span class="m-item">Content Strategy</span><span class="m-item">YC-backed</span>
+    <span class="m-item">Pharma Explainers</span><span class="m-item">300+ Projects</span>
+    <span class="m-item">A/B Testing</span><span class="m-item">Kinetic Typography</span>
+    <span class="m-item">Photoshop</span><span class="m-item">Illustrator</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <p class="s-label">About</p>
+  <div class="about-grid">
+    <div>
+      <h2 class="about-hl">
+        <span class="split-line"><span class="split-line-inner">I animate products</span></span>
+        <span class="split-line"><span class="split-line-inner">for startups that</span></span>
+        <span class="split-line"><span class="split-line-inner">move fast.</span></span>
+        <span class="split-line"><span class="split-line-inner" style="font-size:clamp(16px,1.8vw,26px);color:var(--muted);font-weight:300;margin-top:.5rem">Clean UI motion for modern</span></span>
+        <span class="split-line"><span class="split-line-inner" style="font-size:clamp(16px,1.8vw,26px);color:var(--muted);font-weight:300">tech &amp; AI companies.</span></span>
+      </h2>
+    </div>
+    <div>
+      <p class="about-text">Started as a freelance video editor in 2020. Spent 4 years obsessing over craft — After Effects expressions, brand animation, kinetic typography — until clients stopped asking for edits and started asking for full motion systems.</p>
+      <p class="about-text" style="transition-delay:.1s">Founded CContent Mastery, a personal branding agency where I grew a client from 0 to 100K followers in 5 months as a solo operator. Built reusable motion template libraries that cut production time by 70%.</p>
+      <p class="about-text" style="transition-delay:.2s">Now at SynthioLabs (YC X25), making pharma explainers that distil complex clinical concepts into 60-second stories — increasing view duration by 40% and accelerating campaign turnaround by 35%.</p>
+      <div class="stats">
+        <div class="stat"><div class="stat-n" style="transition-delay:.1s">5+</div><div class="stat-l">Years exp.</div></div>
+        <div class="stat"><div class="stat-n" style="transition-delay:.2s">300+</div><div class="stat-l">Projects</div></div>
+        <div class="stat"><div class="stat-n" style="transition-delay:.3s">200K+</div><div class="stat-l">Followers grown</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SELECTED WORK -->
+<section class="work" id="work">
+  <p class="s-label">Selected work</p>
+
+  <div style="display:flex;justify-content:center">
+    <div class="vid-wrap">
+
+      <div class="vid-frame">
+        <iframe
+          src="https://player.vimeo.com/video/1195110812?autoplay=0&loop=1&title=0&byline=0&portrait=0&color=c8a96e"
+          style="position:absolute;inset:0;width:100%;height:100%;border:none"
+          allow="autoplay; fullscreen; picture-in-picture"
+          allowfullscreen>
+        </iframe>
+      </div>
+
+      <div class="vid-meta">
+        <div style="display:flex;flex-direction:column;gap:.3rem">
+          <div class="card-tags" style="margin:0">
+            <span class="tag">Motion Graphics</span>
+            <span class="tag">After Effects</span>
+            <span class="tag">Pharma</span>
+            <span class="tag">UI Animation</span>
+          </div>
+          <p class="card-title" style="font-size:15px">Latest Work — SynthioLabs</p>
+          <p class="card-sub">Expression-driven pharma explainers · 40% higher view duration</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div style="display:flex;justify-content:center;margin-top:2.5rem">
+    <div class="vid-wrap">
+
+      <div class="vid-frame">
+        <iframe
+          src="https://player.vimeo.com/video/1195114215?autoplay=0&loop=1&title=0&byline=0&portrait=0&color=c8a96e"
+          style="position:absolute;inset:0;width:100%;height:100%;border:none"
+          allow="autoplay; fullscreen; picture-in-picture"
+          allowfullscreen>
+        </iframe>
+      </div>
+
+      <div class="vid-meta">
+        <div style="display:flex;flex-direction:column;gap:.3rem">
+          <div class="card-tags" style="margin:0">
+            <span class="tag">AI Generated</span>
+            <span class="tag">Short Film</span>
+            <span class="tag">Claude</span>
+            <span class="tag">Motion</span>
+          </div>
+          <p class="card-title" style="font-size:15px">AI Generated Short Film</p>
+          <p class="card-sub">Concept, direction &amp; motion — AI-augmented production</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</section>
+
+<!-- WHAT I DO -->
+<section class="services" id="services">
+  <p class="s-label">What I do</p>
+  <div class="services-list">
+    <div class="svc" style="transition-delay:0s">
+      <p class="svc-num">01</p>
+      <p class="svc-title">Motion Design &amp; Animation</p>
+      <p class="svc-desc">After Effects expression-driven animations, kinetic typography, 2D/3D motion, modular template systems, and broadcast-ready motion graphics.</p>
+    </div>
+    <div class="svc" style="transition-delay:.1s">
+      <p class="svc-num">02</p>
+      <p class="svc-title">UI Animation &amp; Micro-interactions</p>
+      <p class="svc-desc">Interface animations, scroll-driven effects, prototype transitions, Lottie animations, and interaction design that brings products to life.</p>
+    </div>
+    <div class="svc" style="transition-delay:.2s">
+      <p class="svc-num">03</p>
+      <p class="svc-title">Brand &amp; Marketing Strategy</p>
+      <p class="svc-desc">Brand systems, Figma design systems, content strategy, hook testing, A/B analysis, and full-funnel motion content for social and campaigns.</p>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section class="experience" id="experience">
+  <p class="s-label">Experience</p>
+  <div>
+
+    <div class="exp-item" style="transition-delay:0s">
+      <div>
+        <p class="exp-period">Sep 2025 – Present</p>
+        <p class="exp-co">SynthioLabs<br/>YC X25 · Pioneer Fund · Peak XV</p>
+      </div>
+      <div>
+        <p class="exp-role">Marketing &amp; Motion Designer</p>
+        <p class="exp-note">San Francisco, CA (remote)</p>
+        <ul class="exp-bullets">
+          <li>Increased avg. video view duration by 40% producing pharma explainer motion graphics — distilling complex clinical concepts into 60-second stories.</li>
+          <li>Cut stakeholder revision rounds by 2 per asset by building a brand style guide and Figma component library.</li>
+          <li>Accelerated campaign asset turnaround by 35% engineering a modular After Effects motion system with reusable pre-comps.</li>
+          <li>Grew LinkedIn organic reach 3× in 90 days by aligning motion content strategy with healthcare professional messaging frameworks.</li>
+        </ul>
+        <div class="exp-tags"><span class="tag">After Effects</span><span class="tag">Figma</span><span class="tag">UI Animation</span><span class="tag">Motion Systems</span><span class="tag">Content Strategy</span></div>
+      </div>
+    </div>
+
+    <div class="exp-item" style="transition-delay:.08s">
+      <div>
+        <p class="exp-period">May 2025 – Jul 2025</p>
+        <p class="exp-co">Doctor Droid<br/>YC W23 · Accel</p>
+      </div>
+      <div>
+        <p class="exp-role">Visual Designer</p>
+        <p class="exp-note">Bangalore, India · 3-month contract — design system from scratch.</p>
+        <ul class="exp-bullets">
+          <li>Improved dev handoff efficiency by 50% delivering a complete Figma design system with documented brand guidelines and reusable components.</li>
+          <li>Reduced social asset turnaround by 60% building templated After Effects motion graphics.</li>
+          <li>Lifted product page conversion 18% (A/B tested) by redesigning product marketing visuals.</li>
+        </ul>
+        <div class="exp-tags"><span class="tag">Figma</span><span class="tag">Design Systems</span><span class="tag">After Effects</span></div>
+      </div>
+    </div>
+
+    <div class="exp-item" style="transition-delay:.16s">
+      <div>
+        <p class="exp-period">May 2024 – Apr 2025</p>
+        <p class="exp-co">CContent Mastery<br/>Bootstrapped · Sole operator</p>
+      </div>
+      <div>
+        <p class="exp-role">Founder &amp; Lead Strategist</p>
+        <p class="exp-note">Dehradun, India · 100K followers in 5 months — zero funding.</p>
+        <ul class="exp-bullets">
+          <li>Grew a client from 0 to 100K followers in 5 months — clients included William Brown, Sara Finance, and Ford Coleman.</li>
+          <li>Grew clients' combined audience by 200K+ followers via data-driven content systems built on hook testing and thumbnail A/B analysis.</li>
+          <li>Cut per-client production time by 70% engineering a reusable motion template library with branded lower-thirds and kinetic typography rigs.</li>
+        </ul>
+        <div class="exp-tags"><span class="tag">After Effects</span><span class="tag">Premiere Pro</span><span class="tag">Brand Strategy</span><span class="tag">A/B Testing</span></div>
+      </div>
+    </div>
+
+    <div class="exp-item" style="transition-delay:.24s">
+      <div>
+        <p class="exp-period">Jun 2020 – Jun 2024</p>
+        <p class="exp-co">Independent<br/>Freelance · India</p>
+      </div>
+      <div>
+        <p class="exp-role">Senior Freelance Motion Designer &amp; Video Editor</p>
+        <p class="exp-note">Progressed from video editing to full motion design, tripling project value.</p>
+        <ul class="exp-bullets">
+          <li>Delivered 300+ motion and video projects across 10+ industries — logo animations, 2D/3D character rigs, explainer videos, and title sequences.</li>
+          <li>Tripled average project value by expanding scope into full motion design, brand animation, and visual identity.</li>
+          <li>Retained 85% of clients for repeat engagements, consistently delivering ahead of deadline.</li>
+        </ul>
+        <div class="exp-tags"><span class="tag">After Effects</span><span class="tag">Premiere Pro</span><span class="tag">Illustrator</span><span class="tag">Photoshop</span></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section class="skills" id="skills">
+  <p class="s-label">Skills</p>
+  <div class="skills-grid">
+    <div class="skill-block" style="transition-delay:0s">
+      <p class="skill-title">Motion &amp; Animation</p>
+      <p class="skill-list">After Effects (expressions, rigging, pre-comps)<br/>2D/3D animation · Kinetic typography<br/>UI animation &amp; micro-interactions<br/>VFX · Modular motion systems</p>
+    </div>
+    <div class="skill-block" style="transition-delay:.08s">
+      <p class="skill-title">Design &amp; Brand Systems</p>
+      <p class="skill-list">Figma (design systems, component libraries)<br/>Adobe Illustrator · Photoshop<br/>Brand style guides<br/>Product marketing visuals</p>
+    </div>
+    <div class="skill-block" style="transition-delay:.16s">
+      <p class="skill-title">Video &amp; Post-production</p>
+      <p class="skill-list">Premiere Pro<br/>Colour grading · Sound design<br/>Multi-track editing<br/>Motion template systems</p>
+    </div>
+    <div class="skill-block" style="transition-delay:.24s">
+      <p class="skill-title">Strategy &amp; Analytics</p>
+      <p class="skill-list">Content strategy · A/B testing<br/>Hook testing · Thumbnail analysis<br/>Narrative pacing<br/>Personal branding</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <p class="contact-eye">Available for full-time &amp; contract work</p>
+  <div class="split-line" style="display:block">
+    <h2 class="contact-hl">
+      <span class="split-line"><span class="split-line-inner">Let's make</span></span>
+      <span class="split-line"><span class="split-line-inner">something</span></span>
+      <span class="split-line"><span class="split-line-inner"><em>worth watching.</em></span></span>
+    </h2>
+  </div>
+  <div class="contact-links">
+    <a href="https://mail.google.com/mail/?view=cm&to=lakheradhruv19@gmail.com" target="_blank" class="btn">Email me →</a>
+    <a href="https://www.linkedin.com/in/dhruv-lakhera-23145226a/" target="_blank" class="btn btn-ghost">LinkedIn ↗</a>
+    <a href="#" class="btn btn-ghost">Portfolio ↗</a>
+  </div>
+</section>
+
+<footer>
+  <p>© 2025 Dhruv Lakhera</p>
+  <p>Motion Designer &amp; Marketing Strategist · YC-backed · Dehradun, India</p>
+</footer>
+
+<script>
+// ── SCROLL PROGRESS + NAV ──
+const bar=document.getElementById('progress-bar');
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>{
+  const pct=window.scrollY/(document.body.scrollHeight-window.innerHeight)*100;
+  bar.style.width=Math.min(pct,100)+'%';
+  nav.classList.toggle('scrolled',window.scrollY>60);
+});
+
+
+
+// ── SCROLL REVEAL ──
+const io=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(!e.isIntersecting)return;
+    const el=e.target;
+    // split lines
+    el.querySelectorAll('.split-line-inner').forEach((ln,i)=>{
+      setTimeout(()=>ln.classList.add('visible'),i*110);
+    });
+    // generic reveal classes
+    if(el.classList.contains('about-text')||
+       el.classList.contains('stat-n')||
+       el.classList.contains('work-card')||
+       el.classList.contains('svc')||
+       el.classList.contains('exp-item')||
+       el.classList.contains('skill-block')||
+       el.classList.contains('contact-eye')){
+      el.classList.add('visible');
+    }
+    io.unobserve(el);
+  });
+},{threshold:0.12});
+
+document.querySelectorAll(
+  '.about-text,.stat-n,.work-card,.svc,.exp-item,.skill-block,.contact-eye'
+).forEach(el=>io.observe(el));
+
+// observe about headline container for split lines
+document.querySelectorAll('.about-hl,.contact-hl').forEach(el=>io.observe(el));
+
+// ── CONTACT headline split observe ──
+const ioFull=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(!e.isIntersecting)return;
+    e.target.querySelectorAll('.split-line-inner').forEach((ln,i)=>{
+      setTimeout(()=>ln.classList.add('visible'),i*120);
+    });
+    ioFull.unobserve(e.target);
+  });
+},{threshold:0.1});
+document.querySelectorAll('.contact').forEach(el=>ioFull.observe(el));
+
+</script>
+</body>
+</html>
